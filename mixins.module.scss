@@ -1,0 +1,73 @@
+$screen-netbook-screen: 1024px; // 1024px 
+$screen-small-screen: 1366px;
+$screen-small-mac-screen: 1440px;
+$screen-regular-screen: 1920px;
+$screen-wide-screen: 2560px;
+
+$screen-netbook-height: 0px;//768px;     // Netbook height
+$screen-small-height: 600px;      // Small screen height
+$screen-small-mac-height: 800px; // Small Mac height
+$screen-regular-height: 1200px;   // Regular screen height
+$screen-wide-height: 1440px;      // Wide screen height
+
+//$screen-wide-screen: 1024px;
+
+@mixin netbook {
+  @media (min-width: $screen-netbook-screen) {
+    @content;
+  }
+}
+
+@mixin  small {
+  @media (min-width: $screen-small-screen) {
+    @content;
+  }
+}
+
+@mixin  small-mac {
+  @media (min-width: $screen-small-mac-screen) {
+    @content;
+  }
+}
+
+@mixin  regular {
+  @media (min-width: $screen-regular-screen) {
+    @content;
+  }
+}
+
+@mixin  wide {
+  @media (min-width: $screen-wide-screen) {
+    @content;
+  }
+}
+
+@mixin netbook-height {
+  @media (min-height: $screen-netbook-height) {
+    @content;
+  }
+}
+
+@mixin small-height {
+  @media (min-height: $screen-small-height) {
+    @content;
+  }
+}
+
+@mixin small-mac-height {
+  @media (min-height: $screen-small-mac-height) {
+    @content;
+  }
+}
+
+@mixin regular-height {
+  @media (min-height: $screen-regular-height) {
+    @content;
+  }
+}
+
+@mixin wide-height {
+  @media (min-height: $screen-wide-height) {
+    @content;
+  }
+}
