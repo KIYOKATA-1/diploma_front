@@ -1,0 +1,27 @@
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    background: #353B48;
+    padding-inline: 40px;
+
+    .btnContainer{
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+
+        button{
+            width: 130px;
+            height: 40px;
+            border-radius: 16px;
+            outline: none;
+        }
+    }
+
+    .logo{
+        color: white;
+        font-size: 24px;
+    }
+}

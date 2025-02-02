@@ -1,13 +1,18 @@
+"use client";
+
 import React from "react";
-import Header from "./Components/Header";
+import styles from "./landing.module.scss";
+import Login from "./login/page";
 
 export default function Home() {
   return (
-    <>
-      <Header />
-      <main className="flex items-center justify-center h-screen">
-        <h1 className="text-4xl">Welcome to Landing Page</h1>
-      </main>
-    </>
+    <div className={styles.container}>
+      <div className={styles.leftSection}>
+        <div className={styles.centeredBlock}>
+          <Login />
+        </div>
+      </div>
+      <div className={styles.rightSection}></div>
+    </div>
   );
 }

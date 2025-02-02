@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthService } from "@/services/auth/auth.service";
-
+import styles from "./login.module.scss";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +24,7 @@ export default function LoginPage() {
     try {
       const response = await AuthService.activate({ email });
       toast.success(response.message);
-      setPasswordSent(true); 
+      setPasswordSent(true);
       setIsPasswordStep(true);
     } catch (error: any) {
       toast.error(error.message);
@@ -55,21 +55,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-6">Авторизация</h1>
-      {passwordSent && ( 
-        <p className="text-green-600 mb-4">
+    <div className={styles.container}>
+      <h1 className={styles.title}>Авторизация</h1>
+      {passwordSent && (
+        <p className={styles.successMessage}>
           Пароль отправлен на указанную почту.
         </p>
       )}
       <form
         onSubmit={isPasswordStep ? handleLogin : (e) => e.preventDefault()}
-        className="bg-white p-6 rounded shadow-md w-96"
+        className={styles.form}
       >
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 mb-2">
-            Email:
-          </label>
+        <div className={styles.inputGroup}>
           <input
             id="email"
             type="email"
@@ -77,12 +74,12 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={isPasswordStep}
-            className="w-full px-4 py-2 border rounded"
+            className={styles.input}
           />
         </div>
         {isPasswordStep && (
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 mb-2">
+          <div className={styles.inputGroup}>
+            <label htmlFor="password" className={styles.label}>
               Пароль:
             </label>
             <input
@@ -91,7 +88,7 @@ export default function LoginPage() {
               placeholder="Введите пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border rounded"
+              className={styles.input}
             />
           </div>
         )}
@@ -99,11 +96,7 @@ export default function LoginPage() {
           type={isPasswordStep ? "submit" : "button"}
           onClick={!isPasswordStep ? handleRequestPassword : undefined}
           disabled={loading}
-          className={`w-full px-4 py-2 rounded ${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-500 text-white hover:bg-blue-600"
-          }`}
+          className={`${styles.button} ${loading ? styles.disabled : ""}`}
         >
           {loading
             ? isPasswordStep

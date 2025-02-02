@@ -39,7 +39,6 @@ const Header = () => {
   
     return (
       <div className="flex justify-between items-center p-4 bg-gray-100">
-        <h1>Header</h1>
         <div>
           <button
             className="px-4 py-2 bg-red-500 text-white rounded"
