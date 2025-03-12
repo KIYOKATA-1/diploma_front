@@ -1,18 +1,37 @@
 "use client";
 
-import React from "react";
-import styles from "./landing.module.scss";
-import Login from "./login/page";
+import React, { useState, useEffect } from "react";
+import Landing from "./Components/Landing/page";
+import Header from "./Components/Header/Header";
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <div className={styles.leftSection}>
-        <div className={styles.centeredBlock}>
-          <Login />
-        </div>
+export default function Main() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div >
+        <h1>This page is not available for mobile devices</h1>
       </div>
-      <div className={styles.rightSection}></div>
+    );
+  }
+  return (
+    <div>
+      <section>
+        <Header />
+      </section>
+      <section>
+        <Landing />
+      </section>
     </div>
   );
 }

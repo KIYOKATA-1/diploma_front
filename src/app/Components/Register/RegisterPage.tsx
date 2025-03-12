@@ -1,9 +1,9 @@
 "use client";
 
-import { AuthService } from "@/services/auth/auth.service";
-import { RegisterData } from "@/services/auth/auth.types";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AuthService } from "@/services/auth/auth.service";
+import { RegisterData } from "@/services/auth/auth.types";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -14,7 +14,6 @@ export default function RegisterPage() {
     email: "",
     phoneNumber: "",
   });
-
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -34,10 +33,16 @@ export default function RegisterPage() {
       }
 
       await AuthService.register(formData);
-      alert("Регистрация прошла успешно!");
-      router.push("/login"); // Перенаправление через useRouter
-    } catch (error: any) {
-      alert(error.message);
+      await AuthService.activate({ email: formData.email });
+
+      alert("Регистрация прошла успешно! Пароль отправлен на почту.");
+      router.push("/login");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("Неизвестная ошибка при регистрации");
+      }
     } finally {
       setLoading(false);
     }
@@ -50,9 +55,7 @@ export default function RegisterPage() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div>
-        <h1>Регистрация</h1>
-      </div>
+      <h1>Регистрация</h1>
       <form onSubmit={handleRegister}>
         <div>
           <label htmlFor="identificationNumber">Идентификационный номер:</label>

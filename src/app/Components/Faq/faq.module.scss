@@ -1,0 +1,49 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5rem;
+    width: 100%;
+    height: 100vh;
+
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #000;
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .listItem {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .icon {
+        margin-right: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        /* Если нужно, можно добавить стили для картинки */
+        /* img {
+          filter: invert(50%); // Пример изменения цвета иконки
+        } */
+      }
+
+      span {
+        font-size: 1rem;
+        color: #333;
+      }
+    }
+  }
+}

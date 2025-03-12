@@ -11,7 +11,6 @@ export interface RegisterData {
   phoneNumber: string; // Номер телефона
 }
 
-
 export interface RegisterResponse {
   success: boolean; // Успешность операции
   message: string; // Сообщение от сервера
