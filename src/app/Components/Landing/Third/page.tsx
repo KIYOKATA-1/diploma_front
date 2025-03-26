@@ -1,10 +1,49 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import style from "./third.module.scss";
 import Image from "next/image";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Third() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 80%",
+      },
+    });
+
+    // Анимация заголовка
+    tl.from(containerRef.current.querySelector(`.${style.title}`), {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+    });
+
+    // Анимация карточек с последовательным появлением
+    const cards = containerRef.current.querySelectorAll(`.${style.card}`);
+    tl.from(
+      cards,
+      {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        stagger: 0.2,
+      },
+      "-=0.3"
+    );
+  }, []);
+
   return (
-    <div className={style.container}>
+    <div className={style.container} ref={containerRef}>
       <h1 className={style.title}>Возможности и преимущества системы</h1>
       <div className={style.cards}>
         <div className={style.card}>
@@ -33,7 +72,9 @@ export default function Third() {
             />
           </div>
           <div className={style.info}>
-            <h3 className={style.title}>Паспорт здоровья каждого животного</h3>
+            <h3 className={style.title}>
+              Паспорт здоровья каждого животного
+            </h3>
             <p className={style.description}>Цифровые медицинские записи </p>
           </div>
         </div>

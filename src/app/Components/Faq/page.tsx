@@ -1,7 +1,49 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import styles from './faq.module.scss'
+import styles from "./faq.module.scss";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const Faq: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 80%",
+      },
+    });
+
+    // Анимация заголовка
+    tl.from(containerRef.current.querySelector("h1"), {
+      opacity: 0,
+      y: 20,
+      duration: 1,
+      ease: "power2.out",
+    });
+
+    // Анимация элементов списка с эффектом последовательного появления
+    const items = containerRef.current.querySelectorAll(`.${styles.listItem}`);
+    tl.from(
+      items,
+      {
+        opacity: 0,
+        y: 20,
+        duration: 0.5,
+        ease: "power2.out",
+        stagger: 0.2,
+      },
+      "-=0.5"
+    );
+  }, []);
+
   const questions = [
     "Как работает система учета скота?",
     "Какие устройства поддерживаются?",
@@ -14,7 +56,7 @@ const Faq: React.FC = () => {
   ];
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={containerRef}>
       <h1>Часто задаваемые вопросы</h1>
       <ul className={styles.list}>
         {questions.map((question, index) => (
@@ -23,8 +65,8 @@ const Faq: React.FC = () => {
               <Image
                 src="/shared/icons/faq.svg"
                 alt="arrow"
-                width={20}
-                height={20}
+                width={30}
+                height={30}
               />
             </div>
             <span>{question}</span>

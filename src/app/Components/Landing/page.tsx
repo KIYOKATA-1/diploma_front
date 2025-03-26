@@ -6,27 +6,32 @@ import How from "./How/page";
 import Third from "./Third/page";
 import Fourth from "./Fourth/page";
 import Faq from "../Faq/page";
+
 export default function Landing() {
   return (
     <div className={styles.container}>
-      <section className={styles.first}>
-        <h1 className={styles.title}>Эффективный учет скота <br/> В один клик!</h1>
-        <h3 className={styles.subTitle}>Легко отслеживайте здоровье, вакцинации и данные о животных.</h3>
+      <section id="first" className={styles.first}>
+        <h1 className={styles.title}>
+          Эффективный учет скота <br /> В один клик!
+        </h1>
+        <h3 className={styles.subTitle}>
+          Легко отслеживайте здоровье, вакцинации и данные о животных.
+        </h3>
         <button className={styles.down}>
-            <FontAwesomeIcon icon={faArrowDown} />
+          <FontAwesomeIcon icon={faArrowDown} />
         </button>
       </section>
-      <section className={styles.second}>
-        <How/>
+      <section id="second" className={styles.second}>
+        <How />
       </section>
-      <section className={styles.third}>
-        <Third/>
+      <section id="third" className={styles.third}>
+        <Third />
       </section>
       <section className={styles.fourth}>
-        <Fourth/>
+        <Fourth />
       </section>
-      <section>
-        <Faq/>
+      <section id="faq" className={styles.faq}>
+        <Faq />
       </section>
     </div>
   );

@@ -1,9 +1,48 @@
-import React from "react";
-import style from './how.module.scss';
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import style from "./how.module.scss";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function How() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 80%",
+      },
+    });
+
+    // Анимация заголовка
+    tl.from(containerRef.current.querySelector("h1"), {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+    });
+
+    // Анимация шагов с последовательным появлением (stagger)
+    const steps = containerRef.current.querySelectorAll(`.${style.step}`);
+    tl.from(
+      steps,
+      {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        stagger: 0.3,
+      },
+      "-=0.3"
+    );
+  }, []);
+
   return (
-    <div className={style.container}>
+    <div className={style.container} ref={containerRef}>
       <h1>Как это работает?</h1>
       <div className={style.steps}>
         <div className={style.step}>

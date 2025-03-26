@@ -1,68 +1,74 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import style from "./fourth.module.scss";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Fourth() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 80%",
+      },
+    });
+
+    // Анимация заголовка секции
+    tl.from(containerRef.current.querySelector("h1"), {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      ease: "power2.out",
+    });
+
+    // Анимация шагов (слева/справа)
+    const steps = containerRef.current.querySelectorAll(`.${style.step}`);
+    tl.from(
+      steps,
+      {
+        opacity: 0,
+        x: (index, target) =>
+          target.classList.contains(style.left) ? -50 : 50,
+        duration: 0.8,
+        ease: "power2.out",
+        stagger: 0.3,
+      },
+      "-=0.5"
+    );
+  }, []);
+
   return (
-    <div className={style.container}>
-      <h1>Кому подойдет система?</h1>
+    <div className={style.container} ref={containerRef}>
+      <h1>Кому подойдёт система?</h1>
       <div className={style.timeline}>
-        {/* Первый шаг (слева) */}
         <div className={`${style.step} ${style.left}`}>
           <div className={style.content}>
-            <div className={style.iconWrapper}>
-              <Image
-                alt="arrow"
-                src="/shared/icons/Vector-5.svg"
-                layout="fill"
-                objectFit="contain"
-              />
-            </div>
             <h3>Фермерские хозяйства</h3>
           </div>
         </div>
 
-        {/* Второй шаг (справа) */}
         <div className={`${style.step} ${style.right}`}>
           <div className={style.content}>
-            <div className={style.iconWrapper}>
-              <Image
-                alt="arrow"
-                src="/shared/icons/Vector-5.svg"
-                layout="fill"
-                objectFit="contain"
-              />
-            </div>
             <h3>Ветеринарные клиники</h3>
           </div>
         </div>
 
-        {/* Третий шаг (слева) */}
         <div className={`${style.step} ${style.left}`}>
           <div className={style.content}>
-            <div className={style.iconWrapper}>
-              <Image
-                alt="arrow"
-                src="/shared/icons/Vector-5.svg"
-                layout="fill"
-                objectFit="contain"
-              />
-            </div>
             <h3>Сельскохозяйственные компании</h3>
           </div>
         </div>
 
-        {/* Четвертый шаг (справа) */}
         <div className={`${style.step} ${style.right}`}>
           <div className={style.content}>
-            <div className={style.iconWrapper}>
-              <Image
-                alt="arrow"
-                src="/shared/icons/Vector-5.svg"
-                layout="fill"
-                objectFit="contain"
-              />
-            </div>
             <h3>Владельцы КРС (Крупного Рогатого Скота)</h3>
           </div>
         </div>
