@@ -110,8 +110,12 @@ export default function Register() {
       toast.success(registerResponse.message || "Регистрация прошла успешно");
       
       router.push("/login");
-    } catch (error: any) {
-      toast.error(error.message || "Ошибка при регистрации");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || "Ошибка при регистрации");
+      } else {
+        toast.error("Ошибка при регистрации");
+      }
     }
   };
 
