@@ -2,9 +2,15 @@
 
 import React from "react";
 import styles from "./header.module.scss";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const router = useRouter();
+
+  const handleScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string
+  ) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
@@ -41,8 +47,10 @@ export default function Header() {
         </li>
       </ul>
       <div className={styles.buttons}>
-        <button>Создать аккаунт</button>
-        <button>Войти</button>
+        <button onClick={() => router.push("/register")}>
+          Создать аккаунт
+        </button>
+        <button onClick={() => router.push("/login")}>Войти</button>
       </div>
     </div>
   );
