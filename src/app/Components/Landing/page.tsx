@@ -6,11 +6,20 @@ import How from "./How/page";
 import Third from "./Third/page";
 import Fourth from "./Fourth/page";
 import Faq from "../Faq/page";
+import Image from "next/image";
+import Footer from "../Footer/page";
 
 export default function Landing() {
   return (
     <div className={styles.container}>
       <section id="first" className={styles.first}>
+      <Image
+        className={styles.bgImage}
+        src="/assets/img/firstBg.svg"
+        alt="bg"
+        fill
+      />
+
         <h1 className={styles.title}>
           Эффективный учет скота <br /> В один клик!
         </h1>
@@ -32,6 +41,9 @@ export default function Landing() {
       </section>
       <section id="faq" className={styles.faq}>
         <Faq />
+      </section>
+      <section className={styles.footer}>
+        <Footer/>
       </section>
     </div>
   );

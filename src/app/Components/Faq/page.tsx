@@ -21,7 +21,6 @@ const Faq: React.FC = () => {
       },
     });
 
-    // Анимация заголовка
     tl.from(containerRef.current.querySelector("h1"), {
       opacity: 0,
       y: 20,
@@ -29,7 +28,6 @@ const Faq: React.FC = () => {
       ease: "power2.out",
     });
 
-    // Анимация элементов списка с эффектом последовательного появления
     const items = containerRef.current.querySelectorAll(`.${styles.listItem}`);
     tl.from(
       items,
@@ -57,22 +55,34 @@ const Faq: React.FC = () => {
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <h1>Часто задаваемые вопросы</h1>
-      <ul className={styles.list}>
-        {questions.map((question, index) => (
-          <li key={index} className={styles.listItem}>
-            <div className={styles.icon}>
-              <Image
-                src="/shared/icons/faq.svg"
-                alt="arrow"
-                width={30}
-                height={30}
-              />
-            </div>
-            <span>{question}</span>
-          </li>
-        ))}
-      </ul>
+      <div className={styles.faqImageWrapper}>
+        <Image
+          className={styles.faqImage}
+          src="/assets/img/faqRight.svg"
+          alt="bg"
+          fill
+          priority
+        />
+      </div>
+
+      <div className={styles.content}>
+        <h1>Часто задаваемые вопросы</h1>
+        <ul className={styles.list}>
+          {questions.map((question, index) => (
+            <li key={index} className={styles.listItem}>
+              <div className={styles.icon}>
+                <Image
+                  src="/shared/icons/faq.svg"
+                  alt="arrow"
+                  width={30}
+                  height={30}
+                />
+              </div>
+              <span>{question}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
