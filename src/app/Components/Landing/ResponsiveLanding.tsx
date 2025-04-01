@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import MobileLanding from "../(MobileLanding)/page";
+import MobileLanding from "../MobileLanding/page";
 import Landing from "./page";
-
 
 export default function ResponsiveLanding() {
   const [isMobile, setIsMobile] = useState(false);
@@ -12,7 +11,7 @@ export default function ResponsiveLanding() {
       setIsMobile(window.innerWidth < 1024);
     };
 
-    handleResize(); 
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {

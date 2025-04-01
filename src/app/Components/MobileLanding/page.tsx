@@ -1,11 +1,14 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./MobileLanding.module.scss";
 import { gsap } from "gsap";
-import router from "next/router";
-
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 export default function MobileLanding() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (isMenuOpen && menuRef.current) {
@@ -40,7 +43,7 @@ export default function MobileLanding() {
       >
         <div className={styles.menuContent}>
           <div className={styles.logo}>
-            <img src="/assets/img/mobileLogo.svg" alt="logo" className={styles.logoImage} />
+            <Image src="/assets/img/mobileLogo.svg" alt="logo" className={styles.logoImage} />
             <p>eAnimal</p>
           </div>
           <button className={styles.button} onClick={() => router.push("/register")}>
