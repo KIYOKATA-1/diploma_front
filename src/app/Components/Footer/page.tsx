@@ -28,8 +28,8 @@ export default function Footer() {
         <div className={style.column}>
           <h4>Связаться с нами</h4>
           <ul>
-            <li>Email: support@eanimal.kz</li>
-            <li>Телефон: +7 (777) 123-45-67</li>
+            <li>support@eanimal.kz</li>
+            <li>+7 (777) 123-45-67</li>
             <li>Адрес:</li>
           </ul>
         </div>
