@@ -8,10 +8,12 @@ import Fourth from "./Fourth/page";
 import Faq from "../Faq/page";
 import Image from "next/image";
 import Footer from "../Footer/page";
+import Header from "../Header/Header";
 
 export default function Landing() {
   return (
     <div className={styles.container}>
+      <Header/>
       <section id="first" className={styles.first}>
       <Image
         className={styles.bgImage}

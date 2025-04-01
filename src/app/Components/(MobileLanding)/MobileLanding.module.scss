@@ -1,0 +1,105 @@
+.mobileLanding {
+    background-color: #4da6ff;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .burger {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 24px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 20;
+    background: none;
+    border: none;
+    cursor: pointer;
+  
+    span {
+      display: block;
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+  }
+  
+  .open {
+    span {
+      background-color: black; 
+    }
+  
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+  
+    span:nth-child(2) {
+      opacity: 0;
+    }
+  
+    span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+  }
+  
+  .fullscreenMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100%);
+  }
+  
+  .visible {
+  }
+  
+  .menuContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  
+  .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+  
+    p {
+      font-size: 20px;
+      color: #4da6ff;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+  
+    .logoImage {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+  }
+  
+  .button {
+    padding: 10px 24px;
+    border: 2px solid #4da6ff;
+    border-radius: 30px;
+    background: transparent;
+    color: #4da6ff;
+    font-size: 16px;
+    font-weight: 500;
+    width: 200px;
+    text-align: center;
+  }
+  
