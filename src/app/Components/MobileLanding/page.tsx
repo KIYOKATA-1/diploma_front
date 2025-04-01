@@ -5,6 +5,7 @@ import styles from "./MobileLanding.module.scss";
 import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+
 export default function MobileLanding() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -43,7 +44,13 @@ export default function MobileLanding() {
       >
         <div className={styles.menuContent}>
           <div className={styles.logo}>
-            <Image src="/assets/img/mobileLogo.svg" alt="logo" className={styles.logoImage} />
+            <Image
+              src="/assets/img/mobileLogo.svg"
+              alt="logo"
+              className={styles.logoImage}
+              width={71}
+              height={71}
+            />
             <p>eAnimal</p>
           </div>
           <button className={styles.button} onClick={() => router.push("/register")}>
