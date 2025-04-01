@@ -1,7 +1,12 @@
 "use client";
 
 import React from "react";
-import ResponsiveLanding from "./Components/Landing/ResponsiveLanding";
+import dynamic from "next/dynamic";
+
+const ResponsiveLanding = dynamic(
+  () => import("./Components/Landing/ResponsiveLanding"),
+  { ssr: false }
+);
 
 export default function Main() {
   return (

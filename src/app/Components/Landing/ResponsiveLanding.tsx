@@ -4,7 +4,7 @@ import MobileLanding from "../MobileLanding/page";
 import Landing from "./page";
 
 export default function ResponsiveLanding() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<null | boolean>(null); 
 
   useEffect(() => {
     const handleResize = () => {
@@ -18,6 +18,8 @@ export default function ResponsiveLanding() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  if (isMobile === null) return null;
 
   return isMobile ? <MobileLanding /> : <Landing />;
 }
