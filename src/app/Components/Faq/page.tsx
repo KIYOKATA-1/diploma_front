@@ -12,36 +12,49 @@ const Faq: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 80%",
-      },
-    });
-
-    tl.from(containerRef.current.querySelector("h1"), {
-      opacity: 0,
-      y: 20,
-      duration: 1,
-      ease: "power2.out",
-    });
-
-    const items = containerRef.current.querySelectorAll(`.${styles.listItem}`);
-    tl.from(
-      items,
-      {
-        opacity: 0,
-        y: 20,
-        duration: 0.5,
-        ease: "power2.out",
-        stagger: 0.2,
-      },
-      "-=0.5"
-    );
+    const ctx = gsap.context(() => {
+      if (!containerRef.current) return;
+  
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top center",
+          toggleActions: "play none none none",
+        },
+      });
+  
+      const title = containerRef.current.querySelector("h1");
+      const items = containerRef.current.querySelectorAll(`.${styles.listItem}`);
+  
+      if (title) {
+        tl.from(title, {
+          opacity: 0,
+          y: 20,
+          duration: 1,
+          ease: "power2.out",
+        });
+      }
+  
+      if (items.length > 0) {
+        tl.from(
+          items,
+          {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            ease: "power2.out",
+            stagger: 0.2,
+          },
+          "-=0.5"
+        );
+      }
+  
+      ScrollTrigger.refresh();
+    }, containerRef);
+  
+    return () => ctx.revert();
   }, []);
-
+  
   const questions = [
     "Как работает система учета скота?",
     "Какие устройства поддерживаются?",

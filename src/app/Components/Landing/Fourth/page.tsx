@@ -11,38 +11,50 @@ export default function Fourth() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 80%",
-      },
-    });
-
-    // Анимация заголовка секции
-    tl.from(containerRef.current.querySelector("h1"), {
-      opacity: 0,
-      y: 50,
-      duration: 1,
-      ease: "power2.out",
-    });
-
-    // Анимация шагов (слева/справа)
-    const steps = containerRef.current.querySelectorAll(`.${style.step}`);
-    tl.from(
-      steps,
-      {
-        opacity: 0,
-        x: (index, target) =>
-          target.classList.contains(style.left) ? -50 : 50,
-        duration: 0.8,
-        ease: "power2.out",
-        stagger: 0.3,
-      },
-      "-=0.5"
-    );
+    const ctx = gsap.context(() => {
+      if (!containerRef.current) return;
+  
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top center", // более безопасно, чем 80%
+          toggleActions: "play none none none",
+        },
+      });
+  
+      const header = containerRef.current.querySelector("h1");
+      const steps = containerRef.current.querySelectorAll(`.${style.step}`);
+  
+      if (header) {
+        tl.from(header, {
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          ease: "power2.out",
+        });
+      }
+  
+      if (steps.length > 0) {
+        tl.from(
+          steps,
+          {
+            opacity: 0,
+            x: (index, target) =>
+              target.classList.contains(style.left) ? -50 : 50,
+            duration: 0.8,
+            ease: "power2.out",
+            stagger: 0.3,
+          },
+          "-=0.5"
+        );
+      }
+  
+      ScrollTrigger.refresh();
+    }, containerRef);
+  
+    return () => ctx.revert();
   }, []);
+  
 
   return (
     <div className={style.container} ref={containerRef}>

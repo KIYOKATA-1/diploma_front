@@ -11,35 +11,47 @@ export default function How() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 80%",
-      },
-    });
-
-    // Анимация заголовка
-    tl.from(containerRef.current.querySelector("h1"), {
-      opacity: 0,
-      y: 50,
-      duration: 1,
-    });
-
-    // Анимация шагов с последовательным появлением (stagger)
-    const steps = containerRef.current.querySelectorAll(`.${style.step}`);
-    tl.from(
-      steps,
-      {
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        stagger: 0.3,
-      },
-      "-=0.3"
-    );
+    const ctx = gsap.context(() => {
+      if (!containerRef.current) return;
+  
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top center",
+          toggleActions: "play none none none",
+        },
+      });
+  
+      const title = containerRef.current.querySelector("h1");
+      const steps = containerRef.current.querySelectorAll(`.${style.step}`);
+  
+      if (title) {
+        tl.from(title, {
+          opacity: 0,
+          y: 50,
+          duration: 1,
+        });
+      }
+  
+      if (steps.length > 0) {
+        tl.from(
+          steps,
+          {
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            stagger: 0.3,
+          },
+          "-=0.3"
+        );
+      }
+  
+      ScrollTrigger.refresh();
+    }, containerRef);
+  
+    return () => ctx.revert(); // безопасный выход
   }, []);
+  
 
   return (
     <div className={style.container} ref={containerRef}>

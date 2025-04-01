@@ -12,35 +12,47 @@ export default function Third() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 80%",
-      },
-    });
-
-    // Анимация заголовка
-    tl.from(containerRef.current.querySelector(`.${style.title}`), {
-      opacity: 0,
-      y: 50,
-      duration: 1,
-    });
-
-    // Анимация карточек с последовательным появлением
-    const cards = containerRef.current.querySelectorAll(`.${style.card}`);
-    tl.from(
-      cards,
-      {
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        stagger: 0.2,
-      },
-      "-=0.3"
-    );
+    const ctx = gsap.context(() => {
+      if (!containerRef.current) return;
+  
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top center", // чуть выше, чтобы чаще срабатывало
+          toggleActions: "play none none none",
+        },
+      });
+  
+      const title = containerRef.current.querySelector(`.${style.title}`);
+      const cards = containerRef.current.querySelectorAll(`.${style.card}`);
+  
+      if (title) {
+        tl.from(title, {
+          opacity: 0,
+          y: 50,
+          duration: 1,
+        });
+      }
+  
+      if (cards.length > 0) {
+        tl.from(
+          cards,
+          {
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            stagger: 0.2,
+          },
+          "-=0.3"
+        );
+      }
+  
+      ScrollTrigger.refresh(); // важно
+    }, containerRef);
+  
+    return () => ctx.revert(); // безопасная очистка
   }, []);
+  
 
   return (
     <div className={style.container} ref={containerRef}>
