@@ -3,13 +3,13 @@
 import React, { useState } from "react";
 import styles from "./MobileLanding.module.scss";
 import Image from "next/image";
-import MobileMenu from "../MobileMenu/page";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import StepsSlider from "./StepsSlider";
 import Third from "./Third/page";
 import Fourth from "./Fourth/page";
 import Fifth from "./Fifth/page";
+import MobileMenu from "../MobileMenu/MobileMenu";
 
 export default function MobileLanding() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,7 +46,7 @@ export default function MobileLanding() {
       </section>
 
       <section className={styles.second}>
-        <h1>Как это работает? </h1>
+        <h1>Как это работает?</h1>
         <StepsSlider />
       </section>
 
@@ -62,9 +62,7 @@ export default function MobileLanding() {
         <Fifth />
       </section>
 
-      <section className={styles.footer}>
-
-      </section>
+      <section className={styles.footer}></section>
     </div>
   );
 }
