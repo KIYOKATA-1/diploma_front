@@ -17,7 +17,7 @@ export default function Fourth() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top center", // более безопасно, чем 80%
+          start: "top center", 
           toggleActions: "play none none none",
         },
       });

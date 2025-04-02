@@ -3,103 +3,317 @@
   height: 100vh;
   width: 100%;
   position: relative;
-  overflow: hidden;
-}
+  overflow-y: auto;
 
-.burger {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  width: 24px;
-  height: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  z-index: 20;
-  background: none;
-  border: none;
-  cursor: pointer;
+  .burger {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 24px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 20;
+    background: none;
+    border: none;
+    cursor: pointer;
 
-  span {
-    display: block;
-    height: 3px;
+    span {
+      display: block;
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+  }
+
+  .open {
+    span {
+      background-color: black;
+    }
+
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    span:nth-child(2) {
+      opacity: 0;
+    }
+
+    span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+  }
+
+  .fullscreenMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     background-color: white;
-    border-radius: 2px;
-    transition: 0.3s;
-  }
-}
-
-.open {
-  span {
-    background-color: black;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100%);
   }
 
-  span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+  .visible {
+    // Можно оставить пустым, если анимация делается через GSAP
   }
 
-  span:nth-child(2) {
-    opacity: 0;
+  .menuContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
   }
 
-  span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+  .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+
+    p {
+      font-size: 20px;
+      color: #4da6ff;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .logoImage {
+      width: 71px;
+      height: 71px;
+      object-fit: contain;
+    }
   }
-}
 
-.fullscreenMenu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: white;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateX(-100%);
-}
-
-.visible {
-  // Можно оставить пустым, если анимация делается через GSAP
-}
-
-.menuContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-
-.logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 40px;
-
-  p {
-    font-size: 20px;
+  .button {
+    padding: 10px 24px;
+    border: 2px solid #4da6ff;
+    border-radius: 30px;
+    background: transparent;
     color: #4da6ff;
-    font-weight: bold;
-    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    width: 200px;
+    text-align: center;
   }
 
-  .logoImage {
-    width: 71px;
-    height: 71px;
-    object-fit: contain;
+  .first {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-inline: 10vw;
+    padding-block: 4rem;
+    min-height: 100vh;
+    gap: 10rem;
+    background: #35a7ff;
+    text-align: center;
+    box-sizing: border-box;
+
+    .bgImage {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      object-fit: contain;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .text {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      gap: 2rem;
+
+      .title {
+        font-size: 4vw;
+        font-weight: 600;
+        font-family: Manrope, sans-serif;
+        color: white;
+      }
+
+      .subtitle {
+        font-size: 2vw;
+        font-weight: 600;
+        font-family: Manrope, sans-serif;
+        color: white;
+      }
+    }
+
+    .down {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 10px 6px rgba(0, 0, 0, 0.25);
+      border: none;
+      outline: none;
+      cursor: pointer;
+      top: 10rem;
+      background: #fff;
+      border-radius: 50%;
+      transition: all 0.3s ease-in-out;
+      width: 5vw;
+      height: 5vw;
+      min-width: 60px;
+      min-height: 60px;
+      max-width: 110px;
+      max-height: 110px;
+
+      svg {
+        font-size: 2vw;
+        max-width: 40px;
+        max-height: 40px;
+      }
+
+      &:hover {
+        transform: scale(0.8);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+
+  .second {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-inline: 10vw;
+    padding-block: 4rem;
+    gap: 10rem;
+    background: #fff;
+    text-align: start;
+    box-sizing: border-box;
+
+    h1 {
+      position: relative;
+      font-size: 3vw;
+      color: #eaca47;
+    }
+  }
+
+  .third {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-inline: 10vw;
+    padding-block: 4rem;
+    gap: 10rem;
+    background: #35a7ff;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .fourth {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-inline: 10vw;
+    padding-block: 5rem;
+    background: #fff;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .fifth {
+    width: 100%;
+    position: relative;
+    background-color: #d9d9d9;
+  }
+
+  .footer{
+    background: #fff;
+    height: 100vh;
   }
 }
 
-.button {
-  padding: 10px 24px;
-  border: 2px solid #4da6ff;
-  border-radius: 30px;
-  background: transparent;
-  color: #4da6ff;
-  font-size: 16px;
-  font-weight: 500;
-  width: 200px;
-  text-align: center;
+@media (max-width: 1023px) {
+  .mobileLanding {
+    .first {
+      padding-block: 3rem;
+      gap: 5rem;
+
+      .text {
+        gap: 1.5rem;
+
+        .title {
+          font-size: 4vw;
+        }
+
+        .subtitle {
+          font-size: 2vw;
+        }
+      }
+
+      .down {
+        width: 8vw;
+        height: 8vw;
+
+        svg {
+          font-size: 4vw;
+        }
+      }
+    }
+
+    .second {
+      padding-inline: 6vw;
+      padding-block: 3rem;
+      gap: 4rem;
+
+      h1 {
+        font-size: 3vw;
+        text-align: start;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .mobileLanding {
+    .first {
+      .text {
+        .title {
+          font-size: 7vw;
+        }
+
+        .subtitle {
+          font-size: 5vw;
+        }
+      }
+
+      .down {
+        top: 4rem;
+      }
+    }
+
+    .second {
+      h1 {
+        font-size: 7vw;
+      }
+    }
+  }
 }

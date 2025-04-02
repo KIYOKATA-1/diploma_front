@@ -1,0 +1,145 @@
+/* === Базовые стили (в том числе для десктопа) === */
+
+.container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    background: #4da6ff; /* Если нужен цвет фона, пример */
+  }
+  
+  .title {
+    color: #fff;
+    font-size: 32px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  
+  .cards {
+    position: relative;
+    width: 100%;
+    max-width: 800px; 
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .card {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 999px; /* “Пилюльная” форма */
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .iconWrapper {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+    flex-shrink: 0;
+  }
+  
+  .cardIcon {
+    object-fit: contain;
+    /* Пример, если нужна адаптация под Retina-экраны:
+    width: 100%;
+    height: 100%;
+    */
+  }
+  
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: start;
+  }
+  
+  .info h2 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+  }
+  
+  .info p {
+    margin: 0;
+    font-size: 14px;
+    color: #EACA47;
+  }
+  
+  /* === Медиазапрос для устройств с шириной до 1023px === */
+  @media (max-width: 1023px) {
+    .container {
+      padding: 20px;
+    }
+  
+    .title {
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+  
+    .cards {
+      max-width: 100%; /* Можно убрать ограничение в 800px */
+      gap: 20px;
+    }
+  
+    .card {
+      padding: 16px;
+    }
+  
+    .info h2 {
+      font-size: 16px;
+    }
+  
+    .info p {
+      font-size: 13px;
+    }
+  }
+  
+  /* === Дополнительный пример медиазапроса для очень узких экранов (до 480px) === */
+  @media (max-width: 480px) {
+    .title {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+  
+    .card {
+      padding: 14px;
+    }
+  
+    .info h2 {
+      font-size: 15px;
+    }
+  
+    .info p {
+      font-size: 12px;
+    }
+  }
+  
+  /* 
+    При необходимости можно добавить ещё один медиазапрос для (max-width: 320px),
+    если нужно адаптировать под совсем маленькие экраны:
+  */
+  @media (max-width: 320px) {
+    .title {
+      font-size: 18px;
+    }
+  
+    .card {
+      padding: 12px;
+    }
+  
+    .info h2 {
+      font-size: 14px;
+    }
+  
+    .info p {
+      font-size: 12px;
+    }
+  }
+  

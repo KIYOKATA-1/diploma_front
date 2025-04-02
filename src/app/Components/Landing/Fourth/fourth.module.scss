@@ -67,7 +67,6 @@
     left: 0;
     text-align: right;
 
-    /* Пример CSS-треугольника, если хотите "хвостик" слева */
     &::after {
       content: "";
       position: absolute;

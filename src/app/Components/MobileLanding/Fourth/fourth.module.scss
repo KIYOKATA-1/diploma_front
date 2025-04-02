@@ -1,0 +1,78 @@
+.container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+  }
+  
+  .title {
+    /* Используем clamp для адаптивного размера заголовка */
+    font-size: clamp(24px, 3vw, 36px);
+    margin-bottom: 5rem;
+    color: #000;
+  }
+  
+  .cards {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .card {
+    position: relative;
+    border: 2px solid #35a7ff;
+    border-bottom: 4px solid #35a7ff;
+    width: 100%;
+    padding: 60px 40px;
+    text-align: center;
+    word-wrap: break-word;
+    border-radius: 15px;
+    box-shadow: -4px 6px 8px 0 rgba(0, 0, 0, 0.25);
+  
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      bottom: -17px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-top: 16px solid var(--primary, #35a7ff);
+    }
+  }
+  
+  /* Адаптивные стили для экранов от 320px до 1023px */
+  @media screen and (max-width: 1023px) and (min-width: 320px) {
+    .container {
+      padding: 20px;
+    }
+    
+    .title {
+      /* Немного увеличиваем размер заголовка на мобильных устройствах */
+      font-size: clamp(18px, 5vw, 28px);
+      margin-bottom: 2.5rem;
+    }
+    
+    .cards {
+      gap: 1.5rem;
+    }
+    
+    .card {
+      padding: 25px 20px;
+      
+      &:not(:last-child)::after {
+        bottom: -12px;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 12px solid var(--primary, #35a7ff);
+      }
+    }
+  }
+  
