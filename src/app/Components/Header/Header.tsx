@@ -3,14 +3,12 @@
 import React from "react";
 import styles from "./header.module.scss";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Header() {
   const router = useRouter();
 
-  const handleScroll = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    id: string
-  ) => {
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
@@ -20,6 +18,14 @@ export default function Header() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.logo}>
+        <Image
+          src="/assets/img/logo.svg"
+          alt="logo"
+          layout="fill"
+          objectFit="contain"
+        />
+      </div>
       <ul className={styles.nav}>
         <li>
           <a href="#first" onClick={(e) => handleScroll(e, "first")}>
