@@ -10,6 +10,7 @@ import Third from "./Third/page";
 import Fourth from "./Fourth/page";
 import Fifth from "./Fifth/page";
 import MobileMenu from "../MobileMenu/MobileMenu";
+import MobileFooter from "./MobileFooter/MobileFooter";
 
 export default function MobileLanding() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -62,7 +63,9 @@ export default function MobileLanding() {
         <Fifth />
       </section>
 
-      <section className={styles.footer}></section>
+      <section className={styles.footer}>
+        <MobileFooter/>
+      </section>
     </div>
   );
 }

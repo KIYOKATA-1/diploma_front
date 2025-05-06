@@ -1,0 +1,60 @@
+.mobileFooter {
+    background-color: #333;
+    color: #fff;
+    padding: 2rem 5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .section {
+    .title {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+      cursor: pointer;
+    }
+  
+    .arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      &::before {
+        content: "▼";
+        font-size: 0.8rem;
+      }
+    }
+    .open {
+      transform: rotate(180deg);
+    }
+  
+    .list {
+      list-style: none;
+      padding: 0.5rem 0 0 1rem;
+      margin: 0;
+  
+      li {
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+        transition: color 0.3s ease, transform 0.3s ease;
+        &:hover {
+          color: #35a7ff;
+          transform: translateX(5px);
+        }
+      }
+    }
+  }
+  
+  .bottom {
+    font-size: 0.85rem;
+    color: #ccc;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
