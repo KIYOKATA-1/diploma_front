@@ -12,10 +12,10 @@ export default function Header() {
     <div className={styles.container}>
       <div className={styles.logo}>
         <Image
-          src="/assets/img/whiteLogo.svg"
+          src="/assets/img/logoAnimal.png"
           alt="logo"
           layout="fill"
-          objectFit="contain"
+          objectFit="cover"
         />
       </div>
       <div className={styles.buttons}>
