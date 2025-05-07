@@ -1,25 +1,30 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "./MobileLanding.module.scss";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "@/hooks/useAuth";
+import MobileMenu from "@/app/Components/MobileMenu/MobileMenu";
+import styles from "./MobileLanding.module.scss";
 import StepsSlider from "./StepsSlider";
 import Third from "./Third/page";
 import Fourth from "./Fourth/page";
 import Fifth from "./Fifth/page";
-import MobileMenu from "../MobileMenu/MobileMenu";
 import MobileFooter from "./MobileFooter/MobileFooter";
 
 export default function MobileLanding() {
+  const { user, loading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  if (loading) return null;
+  if (user) return null; 
 
   return (
     <div className={styles.mobileLanding}>
       <button
         className={`${styles.burger} ${isMenuOpen ? styles.open : ""}`}
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        onClick={() => setIsMenuOpen((v) => !v)}
       >
         <span />
         <span />
@@ -30,10 +35,10 @@ export default function MobileLanding() {
 
       <section className={styles.first} id="first">
         <Image
-          className={styles.bgImage}
           src="/assets/img/firstBg.svg"
-          alt="bg"
+          alt="фон"
           fill
+          className={styles.bgImage}
         />
         <div className={styles.text}>
           <h1 className={styles.title}>Эффективный учет скота в один клик</h1>
@@ -47,7 +52,7 @@ export default function MobileLanding() {
       </section>
 
       <section className={styles.second}>
-        <h1>Как это работает?</h1>
+        <h2>Как это работает?</h2>
         <StepsSlider />
       </section>
 
@@ -63,9 +68,7 @@ export default function MobileLanding() {
         <Fifth />
       </section>
 
-      <section className={styles.footer}>
-        <MobileFooter/>
-      </section>
+      <MobileFooter />
     </div>
   );
 }

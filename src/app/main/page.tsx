@@ -2,28 +2,29 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "@/hooks/useSession";
-import style from "./main.module.scss";
+import { useAuth } from "@/hooks/useAuth";
+import Spinner from "../Components/Spinner/Spinner";
 
 export default function MainPage() {
+  const { user, loading } = useAuth();
   const router = useRouter();
-  const { session } = useSession();
 
   useEffect(() => {
-    if (!session || !session.user) {
-      router.replace("/login");
+    if (!loading && !user) {
+      router.replace("/");
     }
-  }, [session, router]);
+  }, [loading, user, router]);
 
-  if (!session || !session.user) {
+  if (loading) {
+    return <Spinner />;
+  }
+  if (!user) {
     return null;
   }
 
-  const username = session.user.username;
-
   return (
-    <div className={style.container}>
-      <h1>Добро пожаловать, {username}!</h1>
+    <div>
+      <h1>Добро пожаловать!</h1>
     </div>
   );
 }
