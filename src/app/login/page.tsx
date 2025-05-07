@@ -13,10 +13,12 @@ export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  type LoginError = { error?: string; message?: string };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,8 +31,13 @@ export default function LoginPage() {
       await login(email, password);
       toast.success("Успешная авторизация!");
       router.replace("/main");
-    } catch (err: any) {
-      toast.error(err.error || err.message || "Неизвестная ошибка при авторизации");
+    } catch (err: unknown) {
+      let msg = "Неизвестная ошибка при авторизации";
+      if (typeof err === "object" && err !== null) {
+        const e = err as LoginError;
+        msg = e.error ?? e.message ?? msg;
+      }
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
