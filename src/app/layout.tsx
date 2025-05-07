@@ -1,6 +1,9 @@
+import React from "react";
 import Header from "./Components/Header/Header";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {
   title: "eAnimal",
@@ -16,11 +19,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <body>
         <AuthProvider>
           <Header />
           <main>{children}</main>
+          <ToastContainer
+            position="bottom-center"
+            autoClose={3000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable={false}
+            pauseOnHover
+          />
         </AuthProvider>
       </body>
     </html>

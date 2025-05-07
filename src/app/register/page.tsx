@@ -4,25 +4,23 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import style from "./register.module.scss";
-import { AuthService } from "@/services/auth/auth.service";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { AuthService } from "@/services/auth/auth.service";
 
 export default function RegisterPage() {
   const router = useRouter();
 
-  const [iin, setIin] = useState<string>("");
-  const [phone, setPhone] = useState<string>("+7");
-  const [email, setEmail] = useState<string>("");
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [iin, setIin] = useState("");
+  const [phone, setPhone] = useState("+7");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleIinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
@@ -81,11 +79,8 @@ export default function RegisterPage() {
       toast.success(resp.message || "Регистрация прошла успешно");
       router.push(`/activate?email=${encodeURIComponent(email)}`);
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        toast.error(err.message || "Ошибка при регистрации");
-      } else {
-        toast.error("Ошибка при регистрации");
-      }
+      const msg = err instanceof Error ? err.message : "Ошибка при регистрации";
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -216,8 +211,6 @@ export default function RegisterPage() {
           </button>
         </form>
       </div>
-
-      <ToastContainer />
     </div>
   );
 }

@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import style from "./login.module.scss";
 import { useAuth } from "@/hooks/useAuth";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function LoginPage() {
@@ -93,8 +92,6 @@ export default function LoginPage() {
           </button>
         </form>
       </div>
-
-      <ToastContainer position="bottom-center" />
     </div>
   );
 }

@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import style from "./activate.module.scss";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { AuthService } from "@/services/auth/auth.service";
 
 export default function ActivateClient() {
@@ -45,7 +44,6 @@ export default function ActivateClient() {
           {loading ? "Отправляем..." : "Активировать аккаунт"}
         </button>
       </div>
-      <ToastContainer position="bottom-center" />
     </div>
   );
 }
