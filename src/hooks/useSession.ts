@@ -2,15 +2,11 @@
 
 import { useState, useEffect } from "react";
 
-interface UserData {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
+export interface UserData {
+  username: string;
 }
 
-interface SessionData {
+export interface SessionData {
   token: string;
   user: UserData;
 }
@@ -19,7 +15,7 @@ export function useSession() {
   const [session, setSessionState] = useState<SessionData | null>(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("session");
-      return stored ? JSON.parse(stored) : null;
+      return stored ? (JSON.parse(stored) as SessionData) : null;
     }
     return null;
   });

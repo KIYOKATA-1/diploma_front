@@ -49,7 +49,7 @@ export default function How() {
       ScrollTrigger.refresh();
     }, containerRef);
   
-    return () => ctx.revert(); // безопасный выход
+    return () => ctx.revert();
   }, []);
   
 

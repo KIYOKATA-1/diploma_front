@@ -1,63 +1,38 @@
-import {
-  RegisterData,
-  RegisterResponse,
-  RegisterError,
-  LoginResponse,
-  LoginData,
-  LoginError,
-  ActivateRequest,
-  ActivateResponse,
-} from "./auth.types";
+import api from "../api";
+
+export interface LoginData { email: string; password: string }
+export interface RegisterData {
+  identificationNumber: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+}
 
 export class AuthService {
-  static async register(data: RegisterData): Promise<RegisterResponse> {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const errorData: RegisterError = await response.json();
-      throw new Error(errorData.message || "Ошибка регистрации");
-    }
-    return response.json();
+  static async login(data: LoginData) {
+    const res = await api.post<{ user: { username: string } }>('/auth/login', data);
+    return res.data;
   }
 
-  static async login(data: LoginData): Promise<{ token: string; user: LoginResponse["user"] }> {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const errorData: LoginError = await response.json();
-      throw new Error(errorData.message || "Ошибка авторизации");
-    }
-
-    const responseData: LoginResponse = await response.json();
-    return {
-      token: responseData.token,
-      user: responseData.user,
-    };
+  static async logout() {
+    await api.post('/auth/logout');
   }
 
-  static async activate(data: ActivateRequest): Promise<ActivateResponse> {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/activate?email=${data.email}`,
-      { method: "GET" }
+  static async me() {
+    const res = await api.get<{ user: { username: string } }>('/auth/me');
+    return res.data;
+  }
+
+  static async register(data: RegisterData) {
+    const res = await api.post<{ success: boolean; message: string }>('/auth/register', data);
+    return res.data;
+  }
+
+  static async activate(email: string) {
+    const res = await api.get<{ success: boolean; message: string }>(
+      `/auth/activate?email=${encodeURIComponent(email)}`
     );
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || "Ошибка при активации");
-    }
-
-    try {
-      return await response.json();
-    } catch {
-      return { success: true, message: "Пароль отправлен на почту." };
-    }
+    return res.data;
   }
 }

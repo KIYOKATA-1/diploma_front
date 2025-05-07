@@ -1,18 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import style from "./register.module.scss";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import style from "./register.module.scss";
+import { AuthService } from "@/services/auth/auth.service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/navigation";
-import { AuthService } from "@/services/auth/auth.service";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function Register() {
+export default function RegisterPage() {
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [iin, setIin] = useState<string>("");
   const [phone, setPhone] = useState<string>("+7");
   const [email, setEmail] = useState<string>("");
@@ -20,146 +19,118 @@ export default function Register() {
   const [lastName, setLastName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleIinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
-    if (value.length <= 12) {
-      setIin(value);
-    }
+    if (value.length <= 12) setIin(value);
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    if (!value.startsWith("+7")) {
-      value = "+7" + value.replace(/^\+?7?/, "");
+    let val = e.target.value;
+    if (!val.startsWith("+7")) {
+      val = "+7" + val.replace(/^\+?7?/, "");
     }
-    const formatted = "+7" + value.slice(2).replace(/\D/g, "");
-    if (formatted.length <= 12) {
-      setPhone(formatted);
-    }
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
+    const cleaned = "+7" + val.slice(2).replace(/\D/g, "");
+    if (cleaned.length <= 12) setPhone(cleaned);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (iin.length !== 12) {
       toast.error("ИИН должен состоять из 12 цифр");
       return;
     }
-
-    const phoneRegex = /^\+7\d{10}$/;
-    if (!phoneRegex.test(phone)) {
-      toast.error("Номер телефона должен начинаться с +7 и содержать 11 цифр");
+    if (!/^\+7\d{10}$/.test(phone)) {
+      toast.error("Телефон должен начинаться с +7 и содержать 11 цифр");
       return;
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error("Пожалуйста, введите корректный адрес электронной почты");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Введите корректный email");
       return;
     }
-
     if (!firstName.trim()) {
       toast.error("Введите имя");
       return;
     }
-
     if (!lastName.trim()) {
       toast.error("Введите фамилию");
       return;
     }
-
     if (!password) {
       toast.error("Введите пароль");
       return;
     }
-
     if (password !== confirmPassword) {
       toast.error("Пароли не совпадают");
       return;
     }
 
+    setLoading(true);
     try {
-      const registerResponse = await AuthService.register({
+      const resp = await AuthService.register({
         identificationNumber: iin,
         firstName,
         lastName,
         email,
         phoneNumber: phone,
       });
-      toast.success(registerResponse.message || "Регистрация прошла успешно");
-      
-      router.push("/login");
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message || "Ошибка при регистрации");
+      toast.success(resp.message || "Регистрация прошла успешно");
+      router.push(`/activate?email=${encodeURIComponent(email)}`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message || "Ошибка при регистрации");
       } else {
         toast.error("Ошибка при регистрации");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className={style.wrapper}>
       <Image
-        className={style.bgImage}
         src="/assets/img/authBg.svg"
-        alt="bg"
+        alt="фон"
         fill
+        className={style.bgImage}
       />
 
       <div className={style.form}>
         <Image
-          className={style.logo}
           src="/assets/img/logo.png"
-          alt="logo"
+          alt="логотип"
           width={100}
           height={100}
+          className={style.logo}
         />
 
         <form onSubmit={handleSubmit}>
-          <div className={style.userInfo}>
-            <div className={style.nameRow}>
-              <div className={style.inputGroup}>
-                <input
-                  type="text"
-                  placeholder="Имя"
-                  required
-                  value={firstName}
-                  onChange={handleFirstNameChange}
-                />
-              </div>
-              <div className={style.inputGroup}>
-                <input
-                  type="text"
-                  placeholder="Фамилия"
-                  required
-                  value={lastName}
-                  onChange={handleLastNameChange}
-                />
-              </div>
+          <div className={style.nameRow}>
+            <div className={style.inputGroup}>
+              <input
+                type="text"
+                placeholder="Имя"
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div className={style.inputGroup}>
+              <input
+                type="text"
+                placeholder="Фамилия"
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
             </div>
           </div>
+
           <div className={style.inputGroup}>
             <input
               type="text"
@@ -168,9 +139,10 @@ export default function Register() {
               value={iin}
               onChange={handleIinChange}
               pattern="\d{12}"
-              title="ИИН должен состоять из 12 цифр"
+              title="12 цифр"
             />
           </div>
+
           <div className={style.inputGroup}>
             <input
               type="tel"
@@ -179,59 +151,72 @@ export default function Register() {
               value={phone}
               onChange={handlePhoneChange}
               pattern="^\+7\d{10}$"
-              title="Номер должен начинаться с +7 и содержать 11 цифр"
+              title="+7 и 10 цифр"
             />
           </div>
+
           <div className={style.inputGroup}>
             <input
               type="email"
               placeholder="Электронная почта"
               required
               value={email}
-              onChange={handleEmailChange}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+
           <div className={style.inputGroup}>
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Пароль"
               required
               value={password}
-              onChange={handlePasswordChange}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <span
               className={style.togglePassword}
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={() => setShowPassword((v) => !v)}
             >
-              {showPassword ? <FaEye /> : <FaEyeSlash />}
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
+
           <div className={style.inputGroup}>
             <input
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Подтвердите пароль"
               required
               value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <span
               className={style.togglePassword}
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              onClick={() => setShowConfirmPassword((v) => !v)}
             >
-              {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
+
           <div className={style.checkboxContainer}>
             <input type="checkbox" id="accept" required />
             <label htmlFor="accept">
-              Я принимаю <a href="#">условия использования</a> и{" "}
-              <a href="#">политику конфиденциальности</a>
+              Я принимаю{" "}
+              <a href="#" target="_blank" rel="noreferrer">
+                условия использования
+              </a>{" "}
+              и{" "}
+              <a href="#" target="_blank" rel="noreferrer">
+                политику конфиденциальности
+              </a>
             </label>
           </div>
 
-          <button type="submit">Зарегистрироваться</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Отправка..." : "Зарегистрироваться"}
+          </button>
         </form>
       </div>
+
       <ToastContainer />
     </div>
   );

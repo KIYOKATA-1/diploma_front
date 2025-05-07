@@ -2,54 +2,35 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AuthService } from "@/services/auth/auth.service";
 import Image from "next/image";
 import style from "./login.module.scss";
-import { useSession } from "@/hooks/useSession";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useAuth } from "@/hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { setSession } = useSession();
+  const { login } = useAuth();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!email || !password) {
       toast.error("Введите email и пароль.");
       return;
     }
-
     setLoading(true);
     try {
-      const response = await AuthService.login({ email, password });
-      setSession({
-        token: response.token,
-        user: response.user,
-      });
+      await login(email, password);
       toast.success("Успешная авторизация!");
       router.replace("/main");
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Неизвестная ошибка при авторизации");
-      }
+    } catch (err: any) {
+      toast.error(err.error || err.message || "Неизвестная ошибка при авторизации");
     } finally {
       setLoading(false);
     }
@@ -58,19 +39,19 @@ export default function LoginPage() {
   return (
     <div className={style.wrapper}>
       <Image
-        className={style.bgImage}
         src="/assets/img/authBg.svg"
-        alt="bg"
+        alt="фон"
         fill
+        className={style.bgImage}
       />
 
       <div className={style.form}>
         <Image
-          className={style.logo}
           src="/assets/img/logo.png"
           alt="logo"
           width={100}
           height={100}
+          className={style.logo}
         />
 
         <form onSubmit={handleLogin}>
@@ -80,20 +61,21 @@ export default function LoginPage() {
               placeholder="Электронная почта"
               required
               value={email}
-              onChange={handleEmailChange}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+
           <div className={style.inputGroup}>
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Пароль"
               required
               value={password}
-              onChange={handlePasswordChange}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <span
               className={style.togglePassword}
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={() => setShowPassword((v) => !v)}
             >
               {showPassword ? <FaEye /> : <FaEyeSlash />}
             </span>
@@ -104,7 +86,8 @@ export default function LoginPage() {
           </button>
         </form>
       </div>
-      <ToastContainer />
+
+      <ToastContainer position="bottom-center" />
     </div>
   );
 }

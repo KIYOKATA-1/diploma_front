@@ -4,9 +4,15 @@ import React from "react";
 import styles from "./header.module.scss";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
+  const { user, loading } = useAuth();
   const router = useRouter();
+
+  if (loading || user) {
+    return null;
+  }
 
   return (
     <div className={styles.container}>
@@ -22,7 +28,9 @@ export default function Header() {
         <button onClick={() => router.push("/register")}>
           Создать аккаунт
         </button>
-        <button onClick={() => router.push("/login")}>Войти</button>
+        <button onClick={() => router.push("/login")}>
+          Войти
+        </button>
       </div>
     </div>
   );

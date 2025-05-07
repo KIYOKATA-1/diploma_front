@@ -5,7 +5,6 @@ import styles from "./third.module.scss";
 import Image from "next/image";
 
 export default function Third() {
-  // Массив с данными для карточек
   const cardsData = [
     {
       id: 1,

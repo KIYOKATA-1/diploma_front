@@ -18,7 +18,7 @@ export default function Third() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top center", // чуть выше, чтобы чаще срабатывало
+          start: "top center", 
           toggleActions: "play none none none",
         },
       });
@@ -47,10 +47,10 @@ export default function Third() {
         );
       }
   
-      ScrollTrigger.refresh(); // важно
+      ScrollTrigger.refresh(); 
     }, containerRef);
   
-    return () => ctx.revert(); // безопасная очистка
+    return () => ctx.revert(); 
   }, []);
   
 
