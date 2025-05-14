@@ -14,6 +14,8 @@
   backdrop-filter: blur(8px);
 
   .logo {
+    background: #ffffff;
+    padding: 4px;
     width: clamp(50px, 4vw, 100px);
     height: clamp(50px, 4vw, 100px);
     border-radius: 50%;
