@@ -1,3 +1,5 @@
+/* AddAnimal.module.scss */
+
 .overlay {
     position: fixed;
     top: 0;
@@ -12,10 +14,10 @@
   
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-  }
   
-  .overlayOpen {
-    opacity: 1;
+    &.overlayOpen {
+      opacity: 1;
+    }
   }
   
   .modal {
@@ -29,21 +31,22 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     position: relative;
   
-    /* Начальное состояние — чуть смещено вверх и уменьшено */
+    /* Начальное состояние */
     transform: translateY(-20px) scale(0.95);
     opacity: 0;
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-  }
   
-  .modalOpen {
-    transform: translateY(0) scale(1);
-    opacity: 1;
+    &.modalOpen {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
   }
   
   .top {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    position: relative;
   }
   
   .closeButton {
@@ -61,6 +64,7 @@
     margin: 0;
   }
   
+  /* Форма */
   .form {
     display: flex;
     flex-direction: column;
@@ -73,7 +77,8 @@
     gap: 20px;
   }
   
-  .field {
+  .field,
+  .fieldVertical {
     display: flex;
     flex-direction: column;
   
@@ -112,36 +117,6 @@
     margin-top: 10px;
   }
   
-  .fieldVertical {
-    display: flex;
-    flex-direction: column;
-  
-    label {
-      font-size: 14px;
-      margin-bottom: 6px;
-      color: #374151;
-    }
-  
-    input {
-      height: 40px;
-      padding: 0 12px;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      font-size: 14px;
-      background: #f9fafb;
-      outline: none;
-      transition: all 0.4s ease-in-out;
-  
-      &:hover {
-        border-color: #000;
-      }
-  
-      &:focus {
-        border: 2px solid #3b82f6;
-      }
-    }
-  }
-  
   .actions {
     display: flex;
     justify-content: flex-end;
@@ -161,6 +136,60 @@
     &:hover {
       background: #3b82f6;
       color: #fff;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .modal {
+      max-width: 85%;
+      padding: 18px 24px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .modal {
+      width: 95%;
+      padding: 16px 20px;
+    }
+  
+    .top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  
+    .closeButton {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      margin: 0;
+    }
+  
+    .title {
+      font-size: 20px;
+    }
+  
+    .form {
+      gap: 16px;
+    }
+  
+    .formRow {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  
+    .actions {
+      justify-content: center;
+    }
+  
+    .submitButton {
+      width: 100%;
+    }
+  }
+  
+  @media (max-height: 600px) {
+    .modal {
+      max-height: 80vh;
     }
   }
   

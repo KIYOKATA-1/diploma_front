@@ -1,18 +1,133 @@
-/* Sidebar.module.scss */
-
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     width: 20vw;
     max-width: 280px;
+    min-width: 200px;
     height: 100vh;
     background: #ffffff;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-    z-index: 2000; 
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 2000;
     display: flex;
     flex-direction: column;
     padding: 0;
+  }
+  
+  .open {
+    transform: translateX(0);
+  }
+  
+  .logoContainer {
+    width: 120px;
+    height: 120px;
+    margin: 24px auto;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease 0.1s,
+                transform 0.4s ease 0.1s;
+  }
+  
+  .open .logoContainer {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .logo {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .nav {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 16px;
+  
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+  
+      li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        background: transparent;
+  
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: opacity 0.3s ease,
+                    transform 0.3s ease;
+  
+        svg {
+          font-size: 18px;
+          color: #333;
+          transition: color 0.3s ease;
+        }
+  
+        span {
+          font-size: 16px;
+          color: #333;
+          transition: color 0.3s ease;
+        }
+  
+        &:hover {
+          background: #529beb;
+  
+          svg, span {
+            color: #fff;
+          }
+        }
+      }
+  
+      li:nth-child(1) { transition-delay: 0.2s; }
+      li:nth-child(2) { transition-delay: 0.3s; }
+      li:nth-child(3) { transition-delay: 0.4s; }
+    }
+  }
+  
+  .open .nav li {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .logoutButton {
+    margin: 24px;
+    padding: 12px;
+    border: none;
+    background: #ff4d4f;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease 0.5s,
+                transform 0.3s ease 0.5s;
+  }
+  
+  .open .logoutButton {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .logoutButton:hover {
+    background: #e04444;
+    transform: translateY(-2px);
   }
   
   .backdrop {
@@ -26,102 +141,25 @@
     pointer-events: none;
     transition: opacity 0.3s ease;
     z-index: 1500;
+  }
   
-    &.open {
-      opacity: 1;
-      pointer-events: all;
+  .backdropOpen {
+    opacity: 1;
+    pointer-events: all;
+  }
+  
+  @media (max-width: 900px) {
+    .sidebar {
+      width: 30vw;
+      max-width: 240px;
     }
   }
   
-  .sidebar {
-    &.open {
-    }
-  
-    .logoContainer {
-      width: 120px;
-      height: 120px;
-      margin: 24px auto;
-      border-radius: 50%;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: transparent;
-    //   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-  
-      &:hover {
-        transform: scale(1.05);
-      }
-  
-      .logo {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-      }
-    }
-  
-    .nav {
-      flex: 1;
-      overflow-y: auto;
-      margin-top: 16px;
-  
-      ul {
-        display: flex;
-        flex-direction: column;
-        gap: 12px; /* отступ между пунктами */
-        list-style: none;
-        padding: 0;
-        margin: 0;
-  
-        li {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 12px 20px;
-          border-radius: 8px;
-          cursor: pointer;
-          transition: background 0.3s ease, color 0.3s ease;
-  
-          svg {
-            transition: color 0.3s ease;
-            color: #333;
-          }
-  
-          span {
-            font-size: 16px;
-            color: #333;
-            transition: color 0.3s ease;
-          }
-  
-          &:hover {
-            background: #529beb;
-  
-            svg,
-            span {
-              color: #fff;
-            }
-          }
-        }
-      }
-    }
-  
-    .logoutButton {
-      margin: 24px;
-      padding: 12px;
-      border: none;
-      background: #ff4d4f;
-      color: #fff;
-      font-weight: 500;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      cursor: pointer;
-      transition: background 0.2s ease, transform 0.2s ease;
-  
-      &:hover {
-        background: #e04444;
-        transform: translateY(-2px);
-      }
+  @media (max-width: 600px) {
+    .sidebar {
+      width: 70vw;
+      max-width: none;
+      min-width: 0;
     }
   }
   

@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Image from "next/image";
 import styles from "./Sidebar.module.scss";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faList, faUser } from "@fortawesome/free-solid-svg-icons";
-import { gsap } from "gsap";
 
 type SidebarProps = {
   isOpen: boolean;
@@ -17,40 +16,6 @@ type SidebarProps = {
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { logout } = useAuth();
   const router = useRouter();
-
-  const sidebarRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<HTMLLIElement[]>([]);
-
-  const tl = useRef(gsap.timeline({ paused: true }));
-
-  itemsRef.current = [];
-
-  useEffect(() => {
-    if (!sidebarRef.current || !logoRef.current) return;
-
-    if (tl.current.duration() === 0) {
-      tl.current
-        .from(sidebarRef.current, { xPercent: -100, duration: 0.3 })
-        .from(logoRef, { autoAlpha: 0, y: -20, duration: 0.4 })
-        .from(
-          itemsRef.current,
-          { autoAlpha: 0, x: -20, duration: 0.3, stagger: 0.1 },
-          "-=0.2"
-        )
-        .from(
-          sidebarRef.current.querySelector(`.${styles.logoutButton}`),
-          { autoAlpha: 0, y: 20, duration: 0.5 },
-          "-=0.1"
-        );
-    }
-
-    if (isOpen) {
-      tl.current.timeScale(1).play();
-    } else {
-      tl.current.timeScale(2).reverse();
-    }
-  }, [isOpen]);
 
   const handleLogout = async () => {
     try {
@@ -65,15 +30,22 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   return (
     <>
+      {/* затемнённый фон */}
       <div
-        className={`${styles.backdrop} ${isOpen ? styles.open : ""}`}
+        className={`${styles.backdrop} ${
+          isOpen ? styles.backdropOpen : ""
+        }`}
         onClick={onClose}
       />
+
+      {/* сам сайдбар */}
       <aside
-        ref={sidebarRef}
-        className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}
+        className={`${styles.sidebar} ${
+          isOpen ? styles.open : ""
+        }`}
       >
-        <div ref={logoRef} className={styles.logoContainer}>
+        {/* логотип */}
+        <div className={styles.logoContainer}>
           <Image
             src="/assets/img/logoAnimal.png"
             alt="Логотип"
@@ -83,6 +55,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           />
         </div>
 
+        {/* пункты меню */}
         <nav className={styles.nav}>
           <ul>
             {[
@@ -90,13 +63,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               { icon: faList, label: "Список Животных", to: "/animals" },
               { icon: faBell, label: "Уведомления", to: "/notifications" },
             ].map(({ icon, label, to }) => (
-              <li
-                key={label}
-                ref={(el) => {
-                  if (el) itemsRef.current.push(el);
-                }}
-                onClick={() => router.push(to)}
-              >
+              <li key={label} onClick={() => router.push(to)}>
                 <FontAwesomeIcon icon={icon} />
                 <span>{label}</span>
               </li>
@@ -104,7 +71,10 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           </ul>
         </nav>
 
-        <button className={styles.logoutButton} onClick={handleLogout}>
+        <button
+          className={styles.logoutButton}
+          onClick={handleLogout}
+        >
           Выйти
         </button>
       </aside>
