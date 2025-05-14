@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faFilter, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faFilter, faSearch, faPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./main.module.scss";
 import Spinner from "../Components/Spinner/Spinner";
 import Sidebar from "../Components/Sidebar/Sidebar";
@@ -13,8 +13,10 @@ import AddAnimalPortal from "../Components/AddAnimal/AddAnimal";
 export default function MainPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isAddAnimalOpen, setAddAnimalOpen] = useState(false);
+  const [isSearchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -35,26 +37,43 @@ export default function MainPage() {
           >
             <FontAwesomeIcon icon={faBars} />
           </button>
+
           <button className={styles.filterButton}>
             <FontAwesomeIcon icon={faFilter} />
           </button>
-          <div className={styles.searchWrapper}>
-            <input
-              type="text"
-              className={styles.searchInput}
-              placeholder="Поиск..."
-            />
+
+          {/* Обёртка ловит onBlur из кнопки и инпута */}
+          <div
+            className={`${styles.searchWrapper} ${isSearchOpen ? styles.open : ""}`}
+            onBlur={() => setSearchOpen(false)}
+          >
+            {!isSearchOpen && (
+              <button
+                className={styles.searchButton}
+                onClick={() => setSearchOpen(true)}
+                aria-label="Открыть поиск"
+              >
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
+            )}
+            {isSearchOpen && (
+              <input
+                type="text"
+                className={styles.searchInput}
+                placeholder="Поиск..."
+                autoFocus
+              />
+            )}
           </div>
         </div>
-        <div>
-          <button
-            className={styles.addButton}
-            onClick={() => setAddAnimalOpen(true)}
-          >
-            <FontAwesomeIcon icon={faPlus} className={styles.addIcon} />
-            <span className={styles.addText}>Добавить животное</span>
-          </button>
-        </div>
+
+        <button
+          className={styles.addButton}
+          onClick={() => setAddAnimalOpen(true)}
+        >
+          <FontAwesomeIcon icon={faPlus} className={styles.addIcon} />
+          <span className={styles.addText}>Добавить животное</span>
+        </button>
       </header>
 
       <Sidebar

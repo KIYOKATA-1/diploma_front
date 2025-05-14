@@ -9,7 +9,7 @@ export default function ResponsiveLanding() {
   const isMobile = useIsMobile();
 
   if (isMobile === null) {
-    return null; 
+    return null;
   }
 
   return isMobile ? <MobileLanding /> : <Landing />;

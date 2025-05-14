@@ -8,19 +8,17 @@ import Fourth from "./Fourth/page";
 import Faq from "../Faq/page";
 import Image from "next/image";
 import Footer from "../Footer/page";
-import Header from "../Header/Header";
 
 export default function Landing() {
   return (
     <div className={styles.container}>
-      <Header/>
       <section id="first" className={styles.first}>
-      <Image
-        className={styles.bgImage}
-        src="/assets/img/firstBg.svg"
-        alt="bg"
-        fill
-      />
+        <Image
+          className={styles.bgImage}
+          src="/assets/img/firstBg.svg"
+          alt="bg"
+          fill
+        />
 
         <h1 className={styles.title}>
           Эффективный учет скота <br /> В один клик!
@@ -32,20 +30,25 @@ export default function Landing() {
           <FontAwesomeIcon icon={faArrowDown} />
         </button>
       </section>
+
       <section id="second" className={styles.second}>
         <How />
       </section>
+
       <section id="third" className={styles.third}>
         <Third />
       </section>
+
       <section className={styles.fourth}>
         <Fourth />
       </section>
+
       <section id="faq" className={styles.faq}>
         <Faq />
       </section>
+
       <section className={styles.footer}>
-        <Footer/>
+        <Footer />
       </section>
     </div>
   );
