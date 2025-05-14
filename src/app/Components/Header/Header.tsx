@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
 import styles from "./header.module.scss";
@@ -9,8 +9,14 @@ import styles from "./header.module.scss";
 export default function Header() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
-  if (loading || user) {
+  if (
+    loading ||
+    user ||
+    pathname === "/login" ||
+    pathname === "/register"
+  ) {
     return null;
   }
 

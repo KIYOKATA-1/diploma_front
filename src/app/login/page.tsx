@@ -52,14 +52,14 @@ export default function LoginPage() {
       />
 
       <div className={style.form}>
-        <Image
-          src="/assets/img/logo.png"
-          alt="logo"
-          width={100}
-          height={100}
-          className={style.logo}
-        />
-
+        <div className={style.logo}>
+          <Image
+            src="/assets/img/logoAnimal.png"
+            alt="logo"
+            fill
+            style={{ objectFit: "cover" }}
+          />
+        </div>
         <form onSubmit={handleLogin}>
           <div className={style.inputGroup}>
             <input

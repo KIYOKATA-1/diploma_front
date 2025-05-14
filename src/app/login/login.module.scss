@@ -32,10 +32,14 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
     .logo {
-      margin-bottom: 1.5rem;
-      transform: scale(0.7);
+      background: #ffffff;
+      padding: 4px;
+      width: clamp(50px, 4vw, 100px);
+      height: clamp(50px, 4vw, 100px);
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
     }
-
     form {
       width: 100%;
       display: flex;
