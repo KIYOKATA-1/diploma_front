@@ -1,3 +1,4 @@
+
 .wrapper {
   position: relative;
   width: 100%;
@@ -33,13 +34,14 @@
 
     .logo {
       background: #ffffff;
-      padding: 4px;
-      width: clamp(50px, 4vw, 100px);
-      height: clamp(50px, 4vw, 100px);
+      padding: 6px;
+      width: clamp(80px, 10vw, 160px);
+      height: clamp(80px, 10vw, 160px);
       border-radius: 50%;
       overflow: hidden;
       position: relative;
     }
+
     form {
       width: 100%;
       display: flex;
@@ -52,11 +54,15 @@
         input {
           width: 100%;
           padding: 0.75rem 2.5rem 0.75rem 1rem;
-          border: 1px solid #000;
+          border: 1px solid #ddd;
           border-radius: 16px;
           font-size: 1rem;
           outline: none;
-          transition: border-color 0.2s ease;
+          transition: all 0.3s ease-in-out;
+
+          &:hover{
+            border-color: #000;
+          }
 
           &:focus {
             border-color: #35a7ff;
@@ -113,23 +119,46 @@
   }
 }
 
-/* Адаптив для планшетов и мобильных */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .wrapper {
-    padding: 0.5rem;
+    padding: 0.75rem;
 
     .form {
-      width: 100%;
+      width: 60vw;
       max-width: 360px;
-      padding: 1.5rem;
+      padding: 2rem 1.5rem;
 
       .logo {
-        transform: scale(0.6);
+        width: clamp(70px, 12vw, 140px);
+        height: clamp(70px, 12vw, 140px);
       }
 
       form {
         gap: 1rem;
 
+        button {
+          width: 60%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .wrapper {
+    padding: 0.5rem;
+
+    .form {
+      width: 90vw;
+      max-width: none;
+      padding: 1.5rem;
+
+      .logo {
+        width: clamp(60px, 20vw, 120px);
+        height: clamp(60px, 20vw, 120px);
+      }
+
+      form {
         .inputGroup input {
           padding: 0.5rem 2rem 0.5rem 0.75rem;
           font-size: 0.9rem;
@@ -144,14 +173,15 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-height: 600px) and (orientation: landscape) {
   .wrapper {
     .form {
-      border-radius: 12px;
+      max-height: 80vh;
       padding: 1rem;
 
-      form .inputGroup input {
-        padding: 0.5rem 1.75rem 0.5rem 0.75rem;
+      .logo {
+        width: clamp(50px, 15vw, 100px);
+        height: clamp(50px, 15vw, 100px);
       }
     }
   }

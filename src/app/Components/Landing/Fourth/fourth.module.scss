@@ -78,12 +78,10 @@
     }
   }
 
-  /* Шаги справа */
   .right {
     left: 50%;
     text-align: left;
 
-    /* Пример CSS-треугольника, если хотите "хвостик" справа */
     &::after {
       content: "";
       position: absolute;

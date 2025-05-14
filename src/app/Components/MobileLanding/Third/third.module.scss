@@ -1,4 +1,3 @@
-/* === Базовые стили (в том числе для десктопа) === */
 
 .container {
     position: relative;
@@ -7,7 +6,7 @@
     flex-direction: column;
     align-items: center;
     padding: 40px;
-    background: #4da6ff; /* Если нужен цвет фона, пример */
+    background: #4da6ff;
   }
   
   .title {
@@ -27,7 +26,7 @@
   .card {
     width: 100%;
     background-color: #fff;
-    border-radius: 999px; /* “Пилюльная” форма */
+    border-radius: 999px;
     display: flex;
     align-items: center;
     padding: 20px;
@@ -44,10 +43,7 @@
   
   .cardIcon {
     object-fit: contain;
-    /* Пример, если нужна адаптация под Retina-экраны:
-    width: 100%;
-    height: 100%;
-    */
+  
   }
   
   .info {
@@ -70,7 +66,6 @@
     color: #EACA47;
   }
   
-  /* === Медиазапрос для устройств с шириной до 1023px === */
   @media (max-width: 1023px) {
     .container {
       padding: 20px;
@@ -82,7 +77,7 @@
     }
   
     .cards {
-      max-width: 100%; /* Можно убрать ограничение в 800px */
+      max-width: 100%; 
       gap: 20px;
     }
   
@@ -99,7 +94,6 @@
     }
   }
   
-  /* === Дополнительный пример медиазапроса для очень узких экранов (до 480px) === */
   @media (max-width: 480px) {
     .title {
       font-size: 20px;
@@ -119,10 +113,7 @@
     }
   }
   
-  /* 
-    При необходимости можно добавить ещё один медиазапрос для (max-width: 320px),
-    если нужно адаптировать под совсем маленькие экраны:
-  */
+
   @media (max-width: 320px) {
     .title {
       font-size: 18px;

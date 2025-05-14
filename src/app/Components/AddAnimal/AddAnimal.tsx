@@ -42,15 +42,10 @@ export default function AddAnimalPortal({ isOpen, onClose }: AddAnimalProps) {
   if (!isOpen || !mounted) return null;
 
   return ReactDOM.createPortal(
-    <div
-      className={`${styles.overlay} ${animate ? styles.overlayOpen : ""}`}
-    >
+    <div className={`${styles.overlay} ${animate ? styles.overlayOpen : ""}`}>
       <div className={`${styles.modal} ${animate ? styles.modalOpen : ""}`}>
         <div className={styles.top}>
-          <button
-            className={styles.closeButton}
-            onClick={onClose}
-          >
+          <button className={styles.closeButton} onClick={onClose}>
             <FontAwesomeIcon icon={faClose} />
           </button>
           <h1 className={styles.title}>Добавление животного</h1>
@@ -60,7 +55,24 @@ export default function AddAnimalPortal({ isOpen, onClose }: AddAnimalProps) {
           <div className={styles.formRow}>
             <div className={styles.field}>
               <label>ИНЖ ID:</label>
-              <input type="text" placeholder="ИНЖ ID" />
+              <input
+                type="text"
+                placeholder="ИНЖ ID"
+                inputMode="numeric"
+                pattern="\d*"
+                maxLength={20} 
+                onKeyDown={(e) => {
+                  if (
+                    !/[0-9]/.test(e.key) &&
+                    e.key !== "Backspace" &&
+                    e.key !== "Tab" &&
+                    e.key !== "ArrowLeft" &&
+                    e.key !== "ArrowRight"
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
+              />
             </div>
             <div className={styles.field}>
               <label>Вид животного:</label>

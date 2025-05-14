@@ -72,7 +72,6 @@
     color: #000;
   }
   
-  /* Линия по центру между карточками */
   .line {
     width: 90px;
     height: 2px;
@@ -95,7 +94,6 @@
     }
   }
   
-  /* Адаптив */
   @media (max-width: 768px) {
     .card {
       width: 220px;

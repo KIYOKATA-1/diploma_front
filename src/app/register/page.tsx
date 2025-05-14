@@ -1,15 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import style from "./register.module.scss";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthService } from "@/services/auth/auth.service";
+import { gsap } from "gsap";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
 
   const [iin, setIin] = useState("");
   const [phone, setPhone] = useState("+7");
@@ -21,6 +24,23 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const tl = gsap.timeline();
+    if (wrapperRef.current && formRef.current) {
+      tl.from(wrapperRef.current, { opacity: 0, duration: 0.5 })
+        .from(
+          formRef.current,
+          { opacity: 0, y: 20, duration: 0.5 },
+          "-=0.3"
+        )
+        .from(
+          formRef.current.querySelectorAll("form > *"),
+          { opacity: 0, y: 20, stagger: 0.1, duration: 0.4 },
+          "-=0.2"
+        );
+    }
+  }, []);
 
   const handleIinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
@@ -79,7 +99,8 @@ export default function RegisterPage() {
       toast.success(resp.message || "Регистрация прошла успешно");
       router.push(`/activate?email=${encodeURIComponent(email)}`);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Ошибка при регистрации";
+      const msg =
+        err instanceof Error ? err.message : "Ошибка при регистрации";
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -87,7 +108,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className={style.wrapper}>
+    <div className={style.wrapper} ref={wrapperRef}>
       <Image
         src="/assets/img/authBg.svg"
         alt="фон"
@@ -95,9 +116,9 @@ export default function RegisterPage() {
         className={style.bgImage}
       />
 
-      <div className={style.form}>
+      <div className={style.form} ref={formRef}>
         <Image
-          src="/assets/img/logo.png"
+          src="/assets/img/animal.png"
           alt="логотип"
           width={100}
           height={100}

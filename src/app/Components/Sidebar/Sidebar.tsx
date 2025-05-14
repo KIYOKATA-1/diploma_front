@@ -47,7 +47,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         {/* логотип */}
         <div className={styles.logoContainer}>
           <Image
-            src="/assets/img/logoAnimal.png"
+            src="/assets/img/animal.png"
             alt="Логотип"
             width={80}
             height={80}

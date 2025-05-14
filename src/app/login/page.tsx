@@ -54,7 +54,7 @@ export default function LoginPage() {
       <div className={style.form}>
         <div className={style.logo}>
           <Image
-            src="/assets/img/logoAnimal.png"
+            src="/assets/img/animal.png"
             alt="logo"
             fill
             style={{ objectFit: "cover" }}

@@ -24,7 +24,7 @@ export default function Header() {
     <header className={styles.container}>
       <div className={styles.logo}>
         <Image
-          src="/assets/img/logoAnimal.png"
+          src="/assets/img/animal.png"
           alt="logo"
           fill
           style={{ objectFit: "cover" }}
